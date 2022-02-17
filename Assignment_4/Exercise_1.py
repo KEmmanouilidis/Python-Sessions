@@ -46,7 +46,7 @@ def get_api_data(api_url):
         json_content.append(api_json_response[i]['content'])
     return json_resource,json_content
 
-#Function that handles:
+#Function that takes the JSON data of the function get_api_data as arguments and handles:
 # 1) the DB connection details
 # 2) the creation of the table and the insertion of the JSON data
 # 3) SELECT statements and the printing of the results
@@ -62,14 +62,14 @@ def db_connection(r,c):
         connection.autocommit = True
         # change the table name if needed
         table_name='emmanouilidis'
-        # SQL// Drop table if exists & insert API result set to the db
+        # SQL// All queries groupped 
         query_drop_table="DROP TABLE IF EXISTS {}".format(table_name)
         query_create_table="CREATE table public.{} ({} text,{} text,{} text,{} text,{} text, {} text)".format(table_name,*resource_keys,*content_keys)
         query_insert_data="INSERT INTO public.{} VALUES ('{}', '{}','{}','{}','{}','{}')"
         query_select1="SELECT * FROM public.{}".format(table_name)
         query_select2="SELECT * FROM public.{} where resource = 'vm:mdvmsrv1444'".format(table_name)
-
-
+        # <----------------- Execution of Queries ----------------->
+        # DROP table IF EXISTS
         cursor.execute(query_drop_table)
         # CREATE TABLE with the items of the relevant lists (resource_keys, content_keys) as columns
         cursor.execute(query_create_table)
